@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1 — 2026-11-26
+
+### Patch changes
+
+- [2d50dcd](https://github.com/waglo-private/node-dbus-next/commit/2d50dcdd3da0ac782d22c041a78ba23ecd57d64e) Release from the `main` branch (renamed from `master`) instead of `waglo-private`. — Thanks Robin Millette!
+
 ## 0.12.0 — 2026-11-26
 
 ### Minor changes
