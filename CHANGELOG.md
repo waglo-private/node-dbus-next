@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.2 — 2026-11-26
+
+### Patch changes
+
+- [0c2ced6](https://github.com/waglo-private/node-dbus-next/commit/0c2ced6ce2df3ffcd094dc5ff864e967b9d680b0) A message read after disconnect() is dropped instead of answered: replying threw "Cannot send message, stream is closed" from a socket event, as an uncaught exception (seen when a service and its client closed at the same time). The error reply to a handler that failed is no longer sent on a closed stream either. — Thanks Robin Millette!
+
 ## 0.12.1 — 2026-11-26
 
 ### Patch changes
