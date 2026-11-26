@@ -1,6 +1,6 @@
 {
-  "name": "@jellybrick/dbus-next",
-  "version": "0.11.4",
+  "name": "@waglo-private/dbus-next",
+  "version": "0.11.5",
   "description": "The next great DBus library for Node",
   "keywords": [
     "dbus",
@@ -70,5 +70,8 @@
     "typescript": "^7.0.2",
     "unplugin-swc": "^1.6.0",
     "vitest": "^4.1.11"
+  },
+  "publishConfig": {
+    "registry": "http://verdaccio.localhost:4873/"
   }
 }

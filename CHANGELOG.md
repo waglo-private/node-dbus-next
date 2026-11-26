@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.11.5 (@waglo-private/dbus-next)
+
+Robin Millette's fork of @jellybrick/dbus-next 0.11.4, published on his Verdaccio as
+@waglo-private/dbus-next.
+
+* Keep members set by `configureMembers()` visible on instances (class fields no longer hide them)
+
 ## v0.10.2
 
 This is a hotfix release for a bug in the system message bus.
