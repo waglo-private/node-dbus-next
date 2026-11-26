@@ -29,7 +29,7 @@ importers:
         version: 0.26.0
       eslint-plugin-perfectionist:
         specifier: ^5.12.1
-        version: 5.12.1(eslint@10.5.0)(typescript@7.0.2)
+        version: 5.12.1(eslint@10.5.0)
       oxfmt:
         specifier: ^0.62.0
         version: 0.62.0
@@ -2578,7 +2578,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-perfectionist@5.12.1(eslint@10.5.0)(typescript@7.0.2):
+  eslint-plugin-perfectionist@5.12.1(eslint@10.5.0):
     dependencies:
       '@typescript-eslint/types': 8.70.1
       '@typescript-eslint/utils': 8.70.1(eslint@10.5.0)(typescript@7.0.2)

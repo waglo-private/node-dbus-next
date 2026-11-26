@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.0 — 2026-11-26
+
+### Minor changes
+
+- [6c64928](https://github.com/waglo-private/node-dbus-next/commit/6c649285fe61e4bc12c5396baef79ab7584b8e0a) Require Node.js 26.10.0 or later. Development now uses nub 0.11.2 or later instead of pnpm, and releases are made with Sampo. — Thanks Robin Millette!
+
 ## v0.11.5 (@waglo-private/dbus-next)
 
 Robin Millette's fork of @jellybrick/dbus-next 0.11.4, published on his Verdaccio as
