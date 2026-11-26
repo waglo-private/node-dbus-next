@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, expect, test } from 'vitest';
 
 import { sessionBus } from '@/index';
+import { Message } from '@/message-type';
 import { Interface, method, signal } from '@/service/interface';
 
 import { call, ping } from '../util';
@@ -62,4 +63,38 @@ test('what happens when a bus disconnects', async () => {
   await ping(bus2);
   bus2.disconnect();
   iface.removeListener('SomeSignal', fn);
+});
+
+test('a method call read after disconnect() is dropped, not answered on the closed stream', async () => {
+  const service = sessionBus();
+  await ping(service);
+  service.export(TEST_PATH, new TestInterface(TEST_IFACE));
+  service.disconnect();
+  // As if the socket still had it buffered: the reply cannot go out any more, and must not throw.
+  const late = new Message({
+    destination: service.name ?? undefined,
+    path: TEST_PATH,
+    interface: TEST_IFACE,
+    member: 'Echo',
+    signature: 's',
+    body: ['late'],
+    serial: 1,
+  });
+  expect(() => service._connection.emit('message', late)).not.toThrow();
+});
+
+test('a client calling while the service disconnects leaves no uncaught error', async () => {
+  for (let i = 0; i < 20; i++) {
+    const service = sessionBus();
+    await service.requestName(`${TEST_NAME}.race${i}`);
+    service.export(TEST_PATH, new TestInterface(TEST_IFACE));
+    const client = sessionBus();
+    const obj = await client.getProxyObject(`${TEST_NAME}.race${i}`, TEST_PATH);
+    const pending = call(obj.getInterface(TEST_IFACE), 'Echo', 'hi').catch(() => null);
+    service.disconnect();
+    await pending;
+    client.disconnect();
+  }
+  // vitest fails the run on an uncaught exception, which is what this would have thrown
+  await new Promise((r) => setTimeout(r, 200));
 });

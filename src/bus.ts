@@ -59,6 +59,7 @@ export class MessageBus extends EventEmitter<MessageBusEvents> implements Servic
   /** @internal */ _serviceObjects: Record<string, ServiceObject | undefined>;
   /** @internal */ private _isHighLevelClientInitialized: boolean;
   /** @internal */ private readonly _matchRules: Record<string, number>;
+  /** @internal */ private _disconnected = false;
 
   /**
    * Create a new `MessageBus`. This constructor is not to be called directly.
@@ -159,12 +160,18 @@ export class MessageBus extends EventEmitter<MessageBusEvents> implements Servic
     };
 
     conn.on('message', (msg: Message) => {
+      // Messages the socket still had buffered after disconnect() cannot be answered any more:
+      // replying would throw "stream is closed" from a socket event, where nothing can catch it.
+      if (this._disconnected) return;
       try {
         // TODO: document this signal
         this.emit('message', msg);
         handleMessage(msg);
       } catch (e) {
         const stack = e instanceof Error ? e.stack : String(e);
+        // The stream may have closed meanwhile (the error may even be that): then there is no one
+        // left to answer, and throwing from here would be uncaught.
+        if (!this._connection.stream?.writable) return;
         this.send(
           Message.newError(
             msg,
@@ -253,6 +260,7 @@ export class MessageBus extends EventEmitter<MessageBusEvents> implements Servic
    * Disconnect this `MessageBus` from the bus.
    */
   disconnect(): void {
+    this._disconnected = true;
     this._connection.stream?.end();
     this._signals.removeAllListeners();
   }
