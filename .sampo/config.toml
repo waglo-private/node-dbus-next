@@ -2,8 +2,8 @@
 version = 1
 
 [git]
-# This private fork releases from its own branch, not upstream's master.
-default_branch = "waglo-private"
+# This private fork releases from main (renamed from master, which now carries the fork).
+default_branch = "main"
 
 [github]
 # By default, Sampo tries to infer the repository from the git remote.
