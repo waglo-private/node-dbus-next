@@ -1,5 +1,5 @@
 // Members configured on an Interface subclass must be visible on its instances.
-// These run without a bus, so `pnpm test` catches regressions that otherwise only
+// These run without a bus, so `nub run test` catches regressions that otherwise only
 // show up in the integration suite.
 
 import { describe, expect, it } from 'vitest';
